@@ -1,0 +1,9 @@
+comtype lzma
+
+idstring "cmp\x00"
+getdstring COMTYPE 4
+get ZSIZE long
+get SIZE long
+get NAME filename
+clog NAME 0x10 ZSIZE SIZE
+next

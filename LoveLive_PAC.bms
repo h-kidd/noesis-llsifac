@@ -1,0 +1,99 @@
+idstring "ARC\x00"
+get UNK1 short
+get UNK2 short
+get FILES long
+get UNK3 long
+getdstring FNAME 0x20
+
+for i = 0 < FILES
+	get OFFSET[i] Long
+next i
+padding 0x20
+for i = 0 < FILES
+	getdstring TYPE 0x04
+	get UNK1 short
+	get IDX short
+	get HASH long
+	get UNK2 short
+	get NSIZE short
+	get UNK3 long
+	getdstring NAME[i] NSIZE
+	if NAME[i] == ""
+		set NAME[i] string i
+	endif
+	if TYPE == "acc"
+		if NAME[i] ext "pac"
+		else
+			string NAME[i] + ".pac"
+		endif
+	elif TYPE == "bin"
+		if NAME[i] ext "bin"
+		elif NAME[i] ext "pac"
+		else
+			string NAME[i] + ".bin"
+		endif
+	elif TYPE == "dat"
+		if NAME[i] ext "dat"
+		else
+			string NAME[i] + ".dat"
+		endif
+	elif TYPE == "dyns"
+		if NAME[i] ext "pac"
+		else
+			string NAME[i] + ".pac"
+		endif
+	elif TYPE == "efx"
+		if NAME[i] ext "efxa"
+		elif NAME[i] ext "efx"
+		else
+			string NAME[i] + ".efx"
+		endif
+	elif TYPE == "mdl"
+		if NAME[i] ext "bmarc"
+		else
+			string NAME[i] + ".bmarc"
+		endif
+	elif TYPE == "mot"
+		if NAME[i] ext "bmarc"
+		else
+			string NAME[i] + ".bmarc"
+		endif
+	
+	elif TYPE == "SARC"
+		if NAME[i] ext "sarc"
+		else
+			string NAME[i] + ".sarc"
+		endif
+	elif TYPE == "SHG"
+		if NAME[i] ext "shg"
+		else
+			string NAME[i] + ".shg"
+		endif
+	elif TYPE == "SHP"
+		if NAME[i] ext "shp"
+		else
+			string NAME[i] + ".shp"
+		endif
+	elif TYPE == "tex"
+		if NAME[i] ext "btx"
+		else
+			string NAME[i] + ".btx"
+		endif
+	elif TYPE == "texs"
+		if NAME[i] ext "pac"
+		else
+			string NAME[i] + ".pac"
+		endif
+	endif
+	padding 0x20
+next i
+for i = 0 < FILES
+	goto OFFSET[i]
+	get FSIZE long
+	get FOFFSET long
+	math FOFFSET + OFFSET[i]
+	get PNAME basename
+	string PNAME + /
+	string PNAME + NAME[i]
+	log PNAME FOFFSET FSIZE
+next i
