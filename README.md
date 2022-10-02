@@ -1,5 +1,5 @@
 # Love Live AC Noesis Script
-Noesis and bms script for Love Live! School idol festival ~after school ACTIVITY~ PS4 and Arcade.
+Noesis and bms script for Love Live! School idol festival after school ACTIVITY PS4 and Arcade.
 Supports models, textures, animations and cameras.
 
 This script requires the vmd module here: https://github.com/h-kidd/noesis-vmd
